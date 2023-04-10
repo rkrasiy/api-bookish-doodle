@@ -5,7 +5,7 @@ To use this project make sure you have [Docker](https://www.docker.com/get-start
 docker-compose up
 ```
 
-And go to [http://localhost:3000]()
+And go to [http://localhost:4000]()
 
 ## Installing Docker
 
@@ -64,7 +64,7 @@ Then add a `start` script to your `package.json` file:
 ```js
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.get("/", async (req, res) => {
   res.setHeader("Content-Type", "text/html");
@@ -83,7 +83,7 @@ Run your app with:
 npm run start
 ```
 
-And go to [http://localhost:3000]() to see:
+And go to [http://localhost:4000]() to see:
 ![Node Hello World](https://res.cloudinary.com/dqse2txyi/image/upload/v1640125011/blogs/docker-node/docker-hello-world_gdeltv.png)
 
 
@@ -124,7 +124,7 @@ RUN npm install
 COPY . .
 # Make this port accessible from outside the container
 # Necessary for your browser to send HTTP requests to your Node app
-EXPOSE 3000
+EXPOSE 4000
 # Command to run when the container is ready
 # Separate arguments as separate values in the array
 CMD [ "npm", "run", "start"]
@@ -242,7 +242,7 @@ services:
       # so this ensures our database is loaded first
       - postgres
     ports:
-      - "3000:8080"
+      - "4000:4000"
     volumes: 
       # Maps our current project directory `.` to
       # our working directory in the container
@@ -326,3 +326,5 @@ Right click `users` an Query Tool:
 ```sql
 SELECT * FROM users;
 ```
+
+To see your data.
