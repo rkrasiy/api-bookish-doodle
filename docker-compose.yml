@@ -9,7 +9,7 @@ services:
       # so this ensures our database is loaded first
       - postgres
     ports:
-      - "4000:4000"
+      - "8080:8080"
     volumes: 
       # Maps our current project directory `.` to
       # our working directory in the container
