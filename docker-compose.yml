@@ -9,7 +9,7 @@ services:
       # so this ensures our database is loaded first
       - postgres
     ports:
-      - "3000:3000"
+      - "3000:8080"
     volumes: 
       # Maps our current project directory `.` to
       # our working directory in the container
@@ -20,7 +20,7 @@ services:
     restart: unless-stopped  
   postgres:
     image: postgres:15
-    container_name: postgres
+    container_name: postgres_bd
     environment:
       # You can set the value of environment variables
       # in your docker-compose.yml file
@@ -38,3 +38,13 @@ services:
     ports:
       # Standard port for PostgreSQL databases
       - "5432:5432"
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    container_name: admin_panel
+    environment:
+        PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+        PGADMIN_DEFAULT_PASSWORD: "admin123!"
+    ports:
+        - "16543:80"
+    depends_on:
+        - postgres
