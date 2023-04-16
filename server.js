@@ -1,12 +1,14 @@
 
 import pg from 'pg';
 import express from 'express';
+import cors from "cors";
 const app = express();
 const port = 8080;
 
-app.get('/', (req, res) => {
-    res.send("API");
-});
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 const client = new pg.Client({
     password: "root",
@@ -14,7 +16,7 @@ const client = new pg.Client({
     host: "postgres",
 });
 
-app.get("/booking", async (req, res) => {
+app.get("/booking", cors(corsOptions), function (req, res) {
     // const results = await client
     //     .query("SELECT * FROM employees")
     //     .then((payload) => {
@@ -23,10 +25,9 @@ app.get("/booking", async (req, res) => {
     //     .catch(() => {
     //         throw new Error("Query failed");
     //     });
+    console.log(req.origin)
     const results = { "json": "success" }
-    res.setHeader("Content-Type", "application/json");
-    res.status(200);
-    res.send(JSON.stringify(results));
+    res.json(results);
 });
 
 
@@ -34,6 +35,6 @@ app.get("/booking", async (req, res) => {
     await client.connect();
 
     app.listen(port, () => {
-        console.log(`Server is listening at http://localhost:${port}`);
+        console.log(`CORS-enabled web server listening on port 80`);
     });
 })();
