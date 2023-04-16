@@ -1,39 +1,22 @@
-
-import pg from 'pg';
 import express from 'express';
-import cors from "cors";
+import cors from 'cors';
+import {getUsers, getUserById, createUser, updateUser, deleteUser, getBooking } from './queries.js';
+
 const app = express();
 const port = 8080;
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+app.use(express.json());
+app.use(cors());
 
-const client = new pg.Client({
-    password: "root",
-    user: "root",
-    host: "postgres",
-});
+app.get("/booking", getBooking);
 
-app.get("/booking", cors(corsOptions), function (req, res) {
-    // const results = await client
-    //     .query("SELECT * FROM employees")
-    //     .then((payload) => {
-    //         return payload.rows;
-    //     })
-    //     .catch(() => {
-    //         throw new Error("Query failed");
-    //     });
-    console.log(req.origin)
-    const results = { "json": "success" }
-    res.json(results);
-});
-
+app.get("/users", getUsers);
+app.get("/users/:id", getUserById);
+app.post("/users", createUser);
+app.put("/users/:id", updateUser);
+app.delete("/users/:id", deleteUser);
 
 (async () => {
-    await client.connect();
-
     app.listen(port, () => {
         console.log(`CORS-enabled web server listening on port 80`);
     });
